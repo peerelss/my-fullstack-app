@@ -2,9 +2,11 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import './page.css';
+import { useRouter } from 'next/navigation'
 import Link from 'next/link';
 const PatientList = () => {
   const [patients, setPatients] = useState([]);
+  const router = useRouter()
   // 获取病人数据
   useEffect(() => {
     const fetchPatients = async () => {
@@ -19,7 +21,7 @@ const PatientList = () => {
     fetchPatients();
   }, []);
   const handleEdit = (id) => {
-   // router.push(`/EditPatient?id=${id}`);
+     router.push(`/EditPatient?id=${id}`);
   };
   return (
     <div className="patient-list">
