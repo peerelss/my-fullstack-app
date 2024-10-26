@@ -5,7 +5,7 @@ const bodyParser = require('body-parser');
 const cors = require('cors'); // 引入 cors
 const app = express();
 const PORT = process.env.PORT || 5000;
-
+const db1 = require('./tools/db');
 // Middleware
 app.use(cors());
 // 中间件
@@ -44,6 +44,25 @@ app.post('/api/patients', (req, res) => {
       res.json({ message: 'Patient added successfully', id: this.lastID });
     }
   });
+});
+
+app.get('/patients', async (req, res) => {
+  try {
+    const users = await db1('patients').select('*');
+    res.json(users);
+  } catch (error) {
+    console.error(error);
+    res.status(500).send('Error retrieving users');
+  }
+});
+app.get('/', async (req, res) => {
+  try {
+
+    res.json({message: 'Hello from Express!'});
+  } catch (error) {
+    console.error(error);
+    res.status(500).send('Error retrieving users');
+  }
 });
 // Sample route
 app.get('/api/hello', (req, res) => {
